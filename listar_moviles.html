@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Listar todos los moviles</title>
+  </head>
+  <body>
+    <div class="container mx-auto  mt-6">
+      <h1 class="text-[36px]">Listar Movil</h1>
+      <table class="table-auto">
+        <thead>
+          <tr>
+            <th class="border px-4 py-2">Numero de Movil</th>
+            <th class="border px-4 py-2">Cuartel</th>
+            <th class="border px-4 py-2">Tipo</th>
+            <th class="border px-4 py-2">Estado</th>
+            <th class="border px-4 py-2">Cambiar Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for movil in moviles %}
+          <tr>
+            <td class="border px-4 py-2">{{ movil.n_movil }}</td>
+            <td class="border px-4 py-2">{{ movil.cuartel }}</td>
+            <td class="border px-4 py-2">{{ movil.tipo }}</td>
+            <td class="border px-4 py-2">
+              {% if movil.estado == "disponible" %}
+              <div class="flex justify-center text-white font-bold bg-green-400 uppercase p-2 rounded">
+                {{ movil.estado }}
+              </div>
+              {% elif movil.estado == "en uso" %}
+              <div class="flex justify-center text-white font-bold bg-yellow-400 uppercase p-2 rounded">
+                {{ movil.estado }}
+              </div>
+              {% elif movil.estado == "fuera de servicio" %}
+              <div class="flex justify-center text-white font-bold bg-red-400 uppercase p-2 rounded">{{ movil.estado }}</div>
+              {% endif %}
+            </td>
+            <td class="border px-4 py-2">
+              <form action="{{ url_for('cambiar_estado', movil_id=movil.id) }}" method="POST">
+                <select name="estado">
+                  <option value="disponible" {% if movil.estado == "disponible" %} selected {% endif %}>Disponible</option>
+                  <option value="en uso" {% if movil.estado == "en uso" %} selected {% endif %}>En uso</option>
+                  <option value="fuera de servicio" {% if movil.estado == "fuera de servicio" %} selected {% endif %}>Fuera de servicio</option>
+                </select>
+                <button type="submit">Guardar</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

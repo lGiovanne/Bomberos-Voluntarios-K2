@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>Listar incidentes</title>
+    </head>
+    <body>
+        <div class="container mx-auto w-max-2xl mt-6">
+            <h1 class="text-[36px]">Listar Incidentes</h1>
+            <table class="table-auto">
+                <thead>
+                    <tr>
+                        <th class="border px-4 py-2">Operador</th>
+                        <th class="border px-4 py-2">Servicio</th>
+                        <th class="border px-4 py-2">Tipo Servicio</th>
+                        <th class="border px-4 py-2">Salida</th>
+                        <th class="border px-4 py-2">Llegada</th>
+                        <th class="border px-4 py-2">Lugar</th>
+                        <th class="border px-4 py-2">Observaciones</th>
+                        <th class="border px-4 py-2">Movil</th>
+                        <th class="border px-4 py-2">Estado</th>
+                        <th class="border px-4 py-2">Cambiar estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for incidente in incidentes %}
+                    <tr>
+                        <td class="border px-4 py-2">{{incidente.operador}}</td>
+                        <td class="border px-4 py-2">{{incidente.servicio}}</td>
+                        <td class="border px-4 py-2">
+                            {{incidente.tipo_servicio}}
+                        </td>
+                        <td class="border px-4 py-2">{{incidente.salida}}</td>
+                        <td class="border px-4 py-2">{{incidente.llegada}}</td>
+                        <td class="border px-4 py-2">{{incidente.lugar}}</td>
+                        <td class="border px-4 py-2">
+                            {{incidente.observaciones}}
+                        </td>
+                        <td class="border px-4 py-2">{{incidente.movil_id}}</td>
+                        <td class="border px-4 py-2">
+                            {% if incidente.estado == "en progreso" %}
+                            <a
+                                href=""
+                                class="flex justify-center text-white font-bold bg-yellow-400 uppercase p-2 rounded"
+                            >
+                                {{ incidente.estado }}
+                            </a>
+                            {% elif incidente.estado == "finalizado" %}
+                            <div
+                                class="flex justify-center text-white font-bold bg-green-400 uppercase p-2 rounded"
+                            >
+                                {{ incidente.estado }}
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td class="border px-4 py-2">
+                            <form action="{{ url_for('cambiar_estado_incidente') }}" method="POST">
+                                <input class="hidden" value={{incidente.id}} type="text" name="incidente_id" id="incidente_id">
+                                <select name="estado" id="estado">
+                                    <option value="en progreso" {% if incidente.estado == 'en progreso' %} selected {% endif %}>En progreso</option>
+                                    <option value="finalizado" {% if incidente.estado == "finalizado" %} selected {% endif %}>Finalizado</option>
+                                </select>
+                                <button type="submit">Guardar</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

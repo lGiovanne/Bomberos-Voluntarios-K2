@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Moviles disponibles</title>
+</head>
+<body>
+    <div class="container mx-auto w-max-2xl mt-6">
+        <h1 class="text-[36px]">Moviles disponibles</h1>
+
+        <table class="table-auto">
+            <thead>
+                <tr>
+                    <th class="border px-4 py-2">Numero de Movil</th>
+                    <th class="border px-4 py-2">
+                        <form action="{{ url_for('disponibles', cuartel=cuartel) }}">
+                            <label for="cuartel">Cuartel</label>
+                            <select name="cuartel" id="cuartel">
+                
+                                {% for cuartel in cuarteles %}
+                                    <option value="{{ cuartel }}">{{ cuartel }}</option>
+                                {% endfor %}
+                            </select>
+                            <button class="border rounded px-4 py-2 bg-gray-400" type="submit">Filtrar</button>
+                        </form>
+                    </th>
+                    <th class="border px-4 py-2">Tipo</th>
+                    <th class="border px-4 py-2">Estado</th>
+                    <th class="border px-4 py-2">Crear incidente</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movil in moviles %}
+                <tr>
+                    <td class="border px-4 py-2">{{ movil.n_movil }}</td>
+                    <td class="border px-4 py-2">{{ movil.cuartel }}</td>
+                    <td class="border px-4 py-2">{{ movil.tipo }}</td>
+                    <td class="border px-4 py-2">
+                        {% if movil.estado == "disponible" %}
+                        <div class="flex justify-center text-white font-bold bg-green-400 uppercase p-2 rounded">
+                            {{ movil.estado }}
+                        </div>
+                        {% elif movil.estado == "en uso" %}
+                        <div class="flex justify-center text-white font-bold bg-yellow-400 uppercase p-2 rounded">
+                            {{ movil.estado }}
+                        </div>
+                        {% elif movil.estado == "fuera de servicio" %}
+                        <div class="flex justify-center text-white font-bold bg-red-400 uppercase p-2 rounded">{{ movil.estado }}</div>
+                        {% endif %}
+                    </td>
+                    <td class="border px-4 py-2 flex justify-center">
+                        <a class="border rounded px-4 py-2 bg-gray-400 text-white" href="{{ url_for('crear_incidente', n_movil=movil.n_movil) }}">Crear</a>
+                    </td>
+                    </tr>
+                    
+                {% endfor %}
+            </tbody>
+                
+</body>
+</html>

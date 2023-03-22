@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Crear Incidente</title>
+  </head>
+  <body>
+    <div class="container mx-auto w-max-2xl mt-6">
+      <h1 class="text-[36px]">Crear Incidente</h1>
+      <h2 class="text-[32px]">Movil asignado: {{n_movil}}</h2>
+      <form class="flex flex-col bg-[#ff8000] p-6" action="" method="post">
+        <label for="operador">Operador:</label>
+        <input type="text" name="operador" id="operador" />
+        <label for="servicio">Servicio:</label>
+        <input type="text" name="servicio" id="servicio" />
+        <label for="tipo_servicio">Tipo Servicio:</label>
+        <input type="text" name="tipo_servicio" id="tipo_servicio" />
+        <label for="salida">Salida:</label>
+        <input type="datetime-local" name="salida" id="salida" />
+        <label for="llegada">Llegada:</label>
+        <input type="datetime-local" name="llegada" id="llegada" />
+        <label for="lugar">Lugar:</label>
+        <input type="text" name="lugar" id="lugar" />
+        <label for="observaciones">Observaciones:</label>
+        <input type="text" name="observaciones" id="observaciones" />
+
+        <button class="bg-gray-400 p-2 mt-4" type="submit">
+          Crear Incidente
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
